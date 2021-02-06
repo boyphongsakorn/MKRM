@@ -24,7 +24,7 @@
         var player;
         function onYouTubePlayerAPIReady() {
             player = new YT.Player('ytplayer', {
-                videoId: 'APzqxJdnKfI'
+                videoId: '1MO2Fa-vy3Y'
             });
 
             player.addEventListener('onStateChange', 'bigtest');
@@ -35,9 +35,10 @@
         }
 
         function bigtest(event) {
-            if(event.data == 0){
+            if(event.data == 0 && fruits.length != 0){
                 console.log('จบแล้ว')
                 player.loadVideoById(fruits[0])
+                fruits.shift()
             }
             console.log(event);
         }
