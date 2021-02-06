@@ -1,2 +1,3 @@
-# MKRM
-Mu Kratha Request Music
+# MKRM (Mu Kratha Request Music)
+
+Coming soon with a big detail...
