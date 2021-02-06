@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+</head>
+<body>
+    <div id="ytplayer" width="100%" height="500"></div>
+
+    <input class="form-control" id="textyoutube" type="text" placeholder="Default input" aria-label="default input example">
+
+    <button type="button" onclick="addnewvideo()" class="btn btn-primary">Primary</button>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+    <script>
+        var fruits = [];
+
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/player_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        var player;
+        function onYouTubePlayerAPIReady() {
+            player = new YT.Player('ytplayer', {
+                videoId: 'APzqxJdnKfI'
+            });
+
+            player.addEventListener('onStateChange', 'bigtest');
+        }
+
+        function addnewvideo() {
+            fruits.push(document.getElementById('textyoutube').value);
+        }
+
+        function bigtest(event) {
+            if(event.data == 0){
+                console.log('จบแล้ว')
+                player.loadVideoById(fruits[0])
+            }
+            console.log(event);
+        }
+    </script>
+</body>
+</html>
