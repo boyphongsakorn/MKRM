@@ -1,5 +1,5 @@
 <?php
-include 'amq.php';
+include 'config.php';
 
 $sql = "INSERT INTO playlist VALUES ('".substr(uniqid(),0,10)."', '".$_POST['ytid']."', 'test', '0' , NOW())";
 
