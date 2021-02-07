@@ -17,6 +17,13 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <script>
+        function ytVidId(url) {
+            var p = /^(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?(?=.*v=((\w|-){11}))(?:\S+)?$/;
+            return (url.match(p)) ? RegExp.$1 : false;
+        }
+
+
+
         function YouTubeGetID(url){
             var ID = '';
             url = url.replace(/(>|<)/gi,'').split(/(vi\/|v=|\/v\/|youtu\.be\/|\/embed\/)/);
@@ -32,6 +39,11 @@
 
         function addnewvideo() {
             video_id = document.getElementById('textyoutube').value
+            if (ytVidId(video_id) !== false) {
+                alert('yes')
+            } else {
+                alert('no')
+            }
             video_id = YouTubeGetID(video_id)
             //video_id = video_id.replace("https://youtu.be/", "");
             //video_id = video_id.replace("https://www.youtube.com/watch?v=", "");
