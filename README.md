@@ -8,6 +8,6 @@
 
 # ทดลอง
 
-- [หน้าแสดงวิดีโอและลิสต์เพลง](https://teamquadb.in.th/rqmusic/)
+- [หน้าแสดงวิดีโอและลิสต์เพลง](https://qbmkrmtest.000webhostapp.com/)
 
-- [หน้าเพิ่มเพลง/ขอเพลง](https://teamquadb.in.th/rqmusic/addmusic.html)
+- [หน้าเพิ่มเพลง/ขอเพลง](https://qbmkrmtest.000webhostapp.com/addmusic.html)
