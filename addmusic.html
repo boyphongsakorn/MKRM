@@ -86,7 +86,7 @@
             $.ajax(settings).done(function (response) {
                 $.each(response.items, function(key, value) {
                     console.log(value.id.videoId)
-                    document.getElementById('showsearch').innerHTML += '<div class="col" onclick="addnewvideo(\''+value.id.videoId+'\')"><div class="card"><img src="https://i.ytimg.com/vi/'+value.id.videoId+'/hqdefault.jpg" class="card-img-top"><div class="card-body"><h5 class="card-title">'+value.snippet.title+'</h5><!--p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p--></div></div></div>'
+                    document.getElementById('showsearch').innerHTML += '<div class="col" onclick="addnewvideo(\''+value.id.videoId+'\')"><div class="card"><img src="https://i.ytimg.com/vi/'+value.id.videoId+'/hqdefault.jpg" class="card-img-top"><div class="card-body"><h5 class="card-title">'+value.snippet.title+'</h5></div></div></div>'
                     //document.getElementById('musiclist').innerHTML += '<tr><th scope=\"row\">'+(key+1)+'</th><td>'+value.pl_ytname+'</td></tr>'
                 });
                 //console.log(response.items[0].id.videoId);
