@@ -15,10 +15,10 @@
 </head>
 <body>
     <div style="height: 100%;display: flex;">
-        <div style="width: 70%;">
+        <div style="width: 70%;" id="videodisplay">
             <div id="ytplayer" width="100%" height="100%"></div>
         </div>
-        <div style="width: 30%;">
+        <div style="width: 30%;" id="playlist">
             <table class="table table-secondary">
                 <thead>
                     <tr>
@@ -47,7 +47,7 @@
             "newestOnTop": true,
             "progressBar": true,
             "positionClass": "toast-top-full-width",
-            "preventDuplicates": false,
+            "preventDuplicates": true,
             "onclick": null,
             "showDuration": "3000",
             "hideDuration": "10000",
@@ -59,6 +59,7 @@
             "hideMethod": "fadeOut"
         }
 
+        var datalist
         var stopnext
         var playlist = [];
         //var fruits = [];
@@ -73,6 +74,7 @@
                 height: '100%',
                 width: '100%',
                 videoId: 'APzqxJdnKfI',
+                playerVars: { 'autoplay': 1, 'controls': 0 },
                 events: {
                     'onReady': onPlayerReady
                 }
@@ -83,14 +85,15 @@
             $.get("gpl.php", function(data, status){
                 playlist = JSON.parse(data)
                 //alert("Data: " + data + "\nStatus: " + status);
-                console.log(JSON.parse(data))
+                //console.log(JSON.parse(data))
                 $.each(JSON.parse(data), function(key, value) {
                     document.getElementById('musiclist').innerHTML += '<tr><th scope=\"row\">'+(key+1)+'</th><td>'+value.pl_ytname+'</td></tr>'
                 });
 
                 if(!playlist.length){
                     stopnext = setInterval(getnext, 5000);
-                    console.log('ไม่มีเพลงให้เล่น')
+                    toastr["warning"]("กรุณาเพิ่มเพลงเข้าลิสต์", "ไม่มีเพลงให้เล่น")
+                    //console.log('ไม่มีเพลงให้เล่น')
                 }else{
                     //player.loadVideoById(playlist[0].pl_ytid)
                     setTimeout(function(){ 
@@ -102,9 +105,14 @@
                         function(data,status){
                             //alert("Data: " + data + "\nStatus: " + status);
                         });
+                        toastr["success"](playlist[0].pl_ytname, "เจอเพลงแล้ว | กำลังเล่น")
+                        setTimeout(function(){
+                            document.getElementById('playlist').style.display = "none";
+                            document.getElementById('videodisplay').style.width = "100%";
+                        }, 10000);
                         playlist.shift()
                         clearInterval(stopnext);
-                        console.log('มีเพลงเล่นตอนเริ่มโปรแกรม')
+                        //console.log('มีเพลงเล่นตอนเริ่มโปรแกรม')
                         $.each(playlist, function(key, value) {
                             document.getElementById('musiclist').innerHTML += '<tr><th scope=\"row\">'+(key+1)+'</th><td>'+value.pl_ytname+'</td></tr>'
                         });
@@ -117,7 +125,10 @@
         }
 
         function onPlayerReady(event) {
-            event.target.playVideo();
+            //event.target.mute()
+            //event.target.playVideo()
+            event.target.setVolume(50)
+            //event.target.unMute()
         }
 
         /*function addnewvideo() {
@@ -129,11 +140,38 @@
             });
         }*/
 
+        setInterval(showdiflist, 3000);
+
+        function showdiflist() {
+            if(document.getElementById('playlist').style.display == "none"){
+                $.get("gpl.php", function(data, status){
+                    if(JSON.parse(data).length > playlist.length || JSON.parse(data).length > playlist){
+                        document.getElementById('playlist').style.display = "block";
+                        document.getElementById('videodisplay').style.width = "70%";
+                        document.getElementById('musiclist').innerHTML = ''
+                        $.each(JSON.parse(data), function(key, value) {
+                            document.getElementById('musiclist').innerHTML += '<tr><th scope=\"row\">'+(key+1)+'</th><td>'+value.pl_ytname+'</td></tr>'
+                        });
+                        setTimeout(function(){
+                            document.getElementById('playlist').style.display = "none";
+                            document.getElementById('videodisplay').style.width = "100%";
+                        }, 20000);
+                        console.log('เพลงใหม่มาแล้ว')
+                        playlist = JSON.parse(data)
+                    }
+                });
+            }
+            player.unMute()
+        }
+
         function getnext() {
-            console.log('กำลังค้นหาเพลง')
+            toastr["info"]("กรุณาเพิ่มเพลงเข้าลิสต์", "กำลังรอเพลง")
+            //console.log('กำลังค้นหาเพลง')
             $.get("gpl.php", function(data, status){
                 playlist = JSON.parse(data)
                 if(playlist.length){
+                    document.getElementById('playlist').style.display = "block";
+                    document.getElementById('videodisplay').style.width = "70%";
                     document.getElementById('musiclist').innerHTML = ''
                     //alert("Data: " + data + "\nStatus: " + status);
                     //console.log(playlist)
@@ -149,9 +187,14 @@
                     });
                     player.loadVideoById(playlist[0].pl_ytid)
                     //setTimeout(function(){ console.log(player.playVideo()) }, 5000);
+                    toastr["success"](playlist[0].pl_ytname, "เจอเพลงแล้ว | กำลังเล่น")
+                    setTimeout(function(){
+                        document.getElementById('playlist').style.display = "none";
+                        document.getElementById('videodisplay').style.width = "100%";
+                    }, 20000);
                     playlist.shift()
                     clearInterval(stopnext);
-                    console.log('เจอเพลงแล้ว')
+                    //console.log('เจอเพลงแล้ว')
                 }
             });
         }
@@ -167,11 +210,17 @@
                 });
             });
 
-            if(event.data == 0 && playlist.length){
+            if(event.data == 0 && playlist.length > 0){
+                document.getElementById('playlist').style.display = "block";
+                document.getElementById('videodisplay').style.width = "70%";
             //if(event.data == 0 && fruits.length != 0){
-                console.log('จบแล้ว')
+                //console.log('จบแล้ว')
                 player.loadVideoById(playlist[0].pl_ytid)
                 toastr["success"](playlist[0].pl_ytname, "กำลังเล่น")
+                setTimeout(function(){
+                    document.getElementById('playlist').style.display = "none";
+                    document.getElementById('videodisplay').style.width = "100%";
+                }, 20000);
                 //player.loadVideoById(fruits[0])
                 //fruits.shift()
                 $.post("ctp.php",
@@ -188,7 +237,7 @@
             /*$.each(fruits, function(key, value) {
                 document.getElementById('musiclist').innerHTML += '<tr><th scope=\"row\">'+(key+1)+'</th><td>'+value+'</td><td>Otto</td><td>@mdo</td></tr>'
             });*/
-            console.log(event);
+            //console.log(event);
         }
     </script>
 </body>

@@ -24,17 +24,17 @@ curl_close($curl);
 
 $test = json_decode($response, true);
 
-echo $test["items"][0]["snippet"]["categoryId"];
+//echo $test["items"][0]["snippet"]["categoryId"];
 
 if ($test["items"][0]["snippet"]["categoryId"] != '10'){
-  echo "สิ่งนี้ไม่ใช่เพลง กรุณาค้นหาเพลงอื่นที่เป็นวิดีโอเพลงครับ";
+  echo "0";
   exit();
 }
 
 $sql = "INSERT INTO playlist VALUES ('".substr(uniqid(),0,10)."', '".$_POST['ytid']."', '".$mysqli->real_escape_string($test["items"][0]["snippet"]["title"])."', '0' , NOW())";
 
 if ($mysqli->query($sql) === TRUE) {
-  echo "เพิ่มเพลงเรียบร้อยแล้ว";
+  echo "1";
 } else {
   echo "Error: " . $sql . "<br>" . $mysqli->error;
 }

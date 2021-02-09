@@ -9,14 +9,10 @@
 </head>
 <body>
 
-    <input class="form-control" id="textyoutube" type="text" placeholder="Default input" aria-label="default input example">
-
-    <button type="button" onclick="addnewvideo(document.getElementById('textyoutube').value)" class="btn btn-primary">ขอเพลง</button>
-
-    <br>
-
-    <h1>หรือค้นหาเพลง</h1>
-
+    <div class="input-group mb-3">
+        <input class="form-control" id="textyoutube" type="text" placeholder="ลิงค์ Youtube" aria-label="ลิงค์ Youtube">
+        <button type="button" onclick="addnewvideo(document.getElementById('textyoutube').value)" class="btn btn-primary">ขอเพลง</button>
+    </div>
     <div class="input-group mb-3">
         <input type="text" id="searchyoutube" class="form-control" placeholder="เพลงที่ต้องการค้นหา" aria-label="เพลงที่ต้องการค้นหา" aria-describedby="basic-addon2">
         <button type="button" onclick="searchvideo()" class="btn btn-primary">ค้นหา</button>
@@ -25,6 +21,7 @@
     <div class="row row-cols-2 row-cols-md-4 g-4" id="showsearch">
     </div>
     
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
@@ -33,8 +30,6 @@
             var p = /^(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?(?=.*v=((\w|-){11}))(?:\S+)?$/;
             return (url.match(p)) ? RegExp.$1 : false;
         }
-
-
 
         function YouTubeGetID(url){
             var ID = '';
@@ -51,23 +46,36 @@
 
         function addnewvideo(test) {
             if (ytVidId(test) !== false) {
-                alert('yes')
+                //alert('yes')
                 test = YouTubeGetID(test)
             } else {
-                alert('no')
+                //alert('no')
             }
             //video_id = video_id.replace("https://youtu.be/", "");
             //video_id = video_id.replace("https://www.youtube.com/watch?v=", "");
             //video_id = video_id.replace("https:/youtube.com/watch?v=", "");
 
-            console.log(test)
+            //console.log(test)
 
             $.post("amq.php",
             {
                 ytid: test,
             },
             function(data,status){
-                alert("Data: " + data + "\nStatus: " + status);
+                if(data == '0'){
+                    Swal.fire(
+                        'มีปัญหา',
+                        'วิดีโอที่คุณเพิ่มไม่ใช่เพลง',
+                        'error'
+                    )
+                }else if(data == '1'){
+                    Swal.fire(
+                        'เรียบร้อย',
+                        'เพิ่มวิดีโอเข้าไปเรียบร้อยแล้ว',
+                        'success'
+                    )
+                }
+                //alert("Data: " + data + "\nStatus: " + status);
             });
         }
 
@@ -85,7 +93,7 @@
 
             $.ajax(settings).done(function (response) {
                 $.each(response.items, function(key, value) {
-                    console.log(value.id.videoId)
+                    //console.log(value.id.videoId)
                     document.getElementById('showsearch').innerHTML += '<div class="col" onclick="addnewvideo(\''+value.id.videoId+'\')"><div class="card"><img src="https://i.ytimg.com/vi/'+value.id.videoId+'/hqdefault.jpg" class="card-img-top"><div class="card-body"><h5 class="card-title">'+value.snippet.title+'</h5></div></div></div>'
                     //document.getElementById('musiclist').innerHTML += '<tr><th scope=\"row\">'+(key+1)+'</th><td>'+value.pl_ytname+'</td></tr>'
                 });
