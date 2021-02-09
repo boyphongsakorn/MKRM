@@ -117,7 +117,9 @@
         }
 
         function onPlayerReady(event) {
-            event.target.playVideo();
+            event.target.mute()
+            event.target.playVideo()
+            event.target.setVolume(50)
         }
 
         /*function addnewvideo() {
