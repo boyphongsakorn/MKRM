@@ -1,7 +1,7 @@
 <?php
 date_default_timezone_set("Asia/Bangkok");
 
-$mysqli = new mysqli("localhost","root","","rqmusic");
+$mysqli = new mysqli("localhost","root","","mkrm");
 
 // Check connection
 if ($mysqli -> connect_errno) {

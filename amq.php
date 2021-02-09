@@ -31,7 +31,7 @@ if ($test["items"][0]["snippet"]["categoryId"] != '10'){
   exit();
 }
 
-$sql = "INSERT INTO playlist VALUES ('".substr(uniqid(),0,10)."', '".$_POST['ytid']."', '".$test["items"][0]["snippet"]["title"]."', '0' , NOW())";
+$sql = "INSERT INTO playlist VALUES ('".substr(uniqid(),0,10)."', '".$_POST['ytid']."', '".$mysqli->real_escape_string($test["items"][0]["snippet"]["title"])."', '0' , NOW())";
 
 if ($mysqli->query($sql) === TRUE) {
   echo "เพิ่มเพลงเรียบร้อยแล้ว";

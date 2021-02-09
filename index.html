@@ -59,6 +59,7 @@
             "hideMethod": "fadeOut"
         }
 
+        var stopnext
         var playlist = [];
         //var fruits = [];
 
@@ -71,18 +72,52 @@
             player = new YT.Player('ytplayer', {
                 height: '100%',
                 width: '100%',
-                videoId: 'APzqxJdnKfI'
+                videoId: 'APzqxJdnKfI',
+                events: {
+                    'onReady': onPlayerReady
+                }
             });
 
             player.addEventListener('onStateChange', 'bigtest');
 
             $.get("gpl.php", function(data, status){
+                playlist = JSON.parse(data)
                 //alert("Data: " + data + "\nStatus: " + status);
                 console.log(JSON.parse(data))
                 $.each(JSON.parse(data), function(key, value) {
                     document.getElementById('musiclist').innerHTML += '<tr><th scope=\"row\">'+(key+1)+'</th><td>'+value.pl_ytname+'</td></tr>'
                 });
+
+                if(!playlist.length){
+                    stopnext = setInterval(getnext, 5000);
+                    console.log('ไม่มีเพลงให้เล่น')
+                }else{
+                    //player.loadVideoById(playlist[0].pl_ytid)
+                    setTimeout(function(){ 
+                        player.loadVideoById(playlist[0].pl_ytid)
+                        $.post("ctp.php",
+                        {
+                            plid: playlist[0].pl_id,
+                        },
+                        function(data,status){
+                            //alert("Data: " + data + "\nStatus: " + status);
+                        });
+                        playlist.shift()
+                        clearInterval(stopnext);
+                        console.log('มีเพลงเล่นตอนเริ่มโปรแกรม')
+                        $.each(playlist, function(key, value) {
+                            document.getElementById('musiclist').innerHTML += '<tr><th scope=\"row\">'+(key+1)+'</th><td>'+value.pl_ytname+'</td></tr>'
+                        });
+                    }, 5000);
+                    /*setTimeout(function(){
+                        console.log(player.playVideo())
+                    }, 10000);*/
+                }
             });
+        }
+
+        function onPlayerReady(event) {
+            event.target.playVideo();
         }
 
         /*function addnewvideo() {
@@ -93,6 +128,33 @@
                 document.getElementById('musiclist').innerHTML += '<tr><th scope=\"row\">'+(key+1)+'</th><td>'+value+'</td><td>Otto</td><td>@mdo</td></tr>'
             });
         }*/
+
+        function getnext() {
+            console.log('กำลังค้นหาเพลง')
+            $.get("gpl.php", function(data, status){
+                playlist = JSON.parse(data)
+                if(playlist.length){
+                    document.getElementById('musiclist').innerHTML = ''
+                    //alert("Data: " + data + "\nStatus: " + status);
+                    //console.log(playlist)
+                    $.each(playlist, function(key, value) {
+                        document.getElementById('musiclist').innerHTML += '<tr><th scope=\"row\">'+(key+1)+'</th><td>'+value.pl_ytname+'</td></tr>'
+                    });
+                    $.post("ctp.php",
+                    {
+                        plid: playlist[0].pl_id,
+                    },
+                    function(data,status){
+                        //alert("Data: " + data + "\nStatus: " + status);
+                    });
+                    player.loadVideoById(playlist[0].pl_ytid)
+                    //setTimeout(function(){ console.log(player.playVideo()) }, 5000);
+                    playlist.shift()
+                    clearInterval(stopnext);
+                    console.log('เจอเพลงแล้ว')
+                }
+            });
+        }
 
         function bigtest(event) {
             $.get("gpl.php", function(data, status){
@@ -105,7 +167,7 @@
                 });
             });
 
-            if(event.data == 0 && playlist.length != 0){
+            if(event.data == 0 && playlist.length){
             //if(event.data == 0 && fruits.length != 0){
                 console.log('จบแล้ว')
                 player.loadVideoById(playlist[0].pl_ytid)
@@ -120,6 +182,8 @@
                     //alert("Data: " + data + "\nStatus: " + status);
                 });
                 playlist.shift()
+            }else if(event.data == 0 && !playlist.length){
+                stopnext = setInterval(getnext, 5000);
             }
             /*$.each(fruits, function(key, value) {
                 document.getElementById('musiclist').innerHTML += '<tr><th scope=\"row\">'+(key+1)+'</th><td>'+value+'</td><td>Otto</td><td>@mdo</td></tr>'
