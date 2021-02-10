@@ -8,12 +8,11 @@
 
 - [วิธีการติดตั้ง](https://github.com/boyphongsakorn/MKRM/wiki/How-To-Install)
 
-- [อัพเดตเวอร์ชั่น 1.1.0](https://www.youtube.com/watch?v=LX8LaEhoT3s)
-- [อัพเดตเวอร์ชั่น 1.2.0](https://www.youtube.com/watch?v=p20BsYgsaSg)
 - [อัพเดตเวอร์ชั่น 1.3.0](https://youtu.be/Q63GoveXfmw)
+- [อัพเดตเวอร์ชั่น 1.2.0](https://www.youtube.com/watch?v=p20BsYgsaSg)
+- [อัพเดตเวอร์ชั่น 1.1.0](https://www.youtube.com/watch?v=LX8LaEhoT3s)
 
 # ทดลอง
 
 - [หน้าแสดงวิดีโอและลิสต์เพลง](https://qbmkrmtest.000webhostapp.com/)
-
 - [หน้าเพิ่มเพลง/ขอเพลง](https://qbmkrmtest.000webhostapp.com/addmusic.html)
