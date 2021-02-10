@@ -6,6 +6,8 @@
 
 [![อธิบายและวิธีการติดตั้ง](https://img.youtube.com/vi/1ZGIKMEDoKw/0.jpg)](https://www.youtube.com/watch?v=1ZGIKMEDoKw)
 
+- [วิธีการติดตั้ง](https://github.com/boyphongsakorn/MKRM/wiki/How-To-Install)
+
 - [อัพเดตเวอร์ชั่น 1.1.0](https://www.youtube.com/watch?v=LX8LaEhoT3s)
 - [อัพเดตเวอร์ชั่น 1.2.0](https://www.youtube.com/watch?v=p20BsYgsaSg)
 - [อัพเดตเวอร์ชั่น 1.3.0](https://youtu.be/Q63GoveXfmw)
