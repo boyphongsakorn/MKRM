@@ -11,7 +11,7 @@ if ($mysqli -> connect_errno) {
 
 $mysqli -> set_charset("utf8");
 
-$youtubeapikey = "";
+$youtubeapikey = "AIzaSyCKnojj634as24PXtBsL6KUGxEv53C4W4U";
 
 $onlymusic = "on";
 $searchmusic = "on";
