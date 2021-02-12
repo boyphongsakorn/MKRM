@@ -26,6 +26,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <script>
+        var youtubedatakey
         var music = 'on'
         var settings = {
             "url": "http://localhost/mkrm/gsettings.php",
@@ -41,6 +42,7 @@
                 document.getElementById('muslink').style.display = 'none';
             }
             music = JSON.parse(response)[0]
+            youtubedatakey = JSON.parse(response)[4]
         });
 
         function ytVidId(url) {
@@ -102,9 +104,9 @@
             document.getElementById('showsearch').innerHTML = ''
 
             if (music == 'off'){
-                url = "https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=50&order=viewCount&q="+document.getElementById('searchyoutube').value+"&type=video&key=youtubedataapi"
+                url = "https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=50&order=viewCount&q="+document.getElementById('searchyoutube').value+"&type=video&key=" + youtubedatakey
             } else {
-                url = "https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=50&order=viewCount&q="+document.getElementById('searchyoutube').value+"&type=video&videoCategoryId=10&key=youtubedataapi"
+                url = "https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=50&order=viewCount&q="+document.getElementById('searchyoutube').value+"&type=video&videoCategoryId=10&key=" + youtubedatakey
             }
 
             var settings = {

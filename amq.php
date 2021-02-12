@@ -4,7 +4,7 @@ include 'config.php';
 $curl = curl_init();
 
 curl_setopt_array($curl, array(
-  CURLOPT_URL => 'https://youtube.googleapis.com/youtube/v3/videos?part=snippet&id='.$_POST['ytid'].'&key=youtubedataapi',
+  CURLOPT_URL => 'https://youtube.googleapis.com/youtube/v3/videos?part=snippet&id='.$_POST['ytid'].'&key='.$youtubeapikey,
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_ENCODING => '',
   CURLOPT_MAXREDIRS => 10,
