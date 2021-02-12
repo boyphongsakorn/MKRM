@@ -9,11 +9,11 @@
 </head>
 <body>
 
-    <div class="input-group mb-3">
+    <div class="input-group" id="muslink">
         <input class="form-control" id="textyoutube" type="text" placeholder="ลิงค์ Youtube" aria-label="ลิงค์ Youtube">
         <button type="button" onclick="addnewvideo(document.getElementById('textyoutube').value)" class="btn btn-primary">ขอเพลง</button>
     </div>
-    <div class="input-group mb-3">
+    <div class="input-group mb-3" id="search">
         <input type="text" id="searchyoutube" class="form-control" placeholder="เพลงที่ต้องการค้นหา" aria-label="เพลงที่ต้องการค้นหา" aria-describedby="basic-addon2">
         <button type="button" onclick="searchvideo()" class="btn btn-primary">ค้นหา</button>
     </div>
@@ -26,6 +26,23 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <script>
+        var music = 'on'
+        var settings = {
+            "url": "http://localhost/mkrm/gsettings.php",
+            "method": "GET",
+            "timeout": 0,
+        };
+
+        $.ajax(settings).done(function (response) {
+            if(JSON.parse(response)[1] == 'off'){
+                document.getElementById('search').style.display ='none';
+            }
+            if(JSON.parse(response)[2] == 'off'){
+                document.getElementById('muslink').style.display = 'none';
+            }
+            music = JSON.parse(response)[0]
+        });
+
         function ytVidId(url) {
             var p = /^(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?(?=.*v=((\w|-){11}))(?:\S+)?$/;
             return (url.match(p)) ? RegExp.$1 : false;
@@ -80,10 +97,18 @@
         }
 
         function searchvideo() {
+            let url
+
             document.getElementById('showsearch').innerHTML = ''
 
+            if (music == 'off'){
+                url = "https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=50&order=viewCount&q="+document.getElementById('searchyoutube').value+"&type=video&key=youtubedataapi"
+            } else {
+                url = "https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=50&order=viewCount&q="+document.getElementById('searchyoutube').value+"&type=video&videoCategoryId=10&key=youtubedataapi"
+            }
+
             var settings = {
-                "url": "https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=50&order=viewCount&q="+document.getElementById('searchyoutube').value+"&type=video&videoCategoryId=10&key=youtubedataapi",
+                "url": url,
                 "method": "GET",
                 "timeout": 0,
                 "headers": {

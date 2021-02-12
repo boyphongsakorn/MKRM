@@ -26,9 +26,11 @@ $test = json_decode($response, true);
 
 //echo $test["items"][0]["snippet"]["categoryId"];
 
-if ($test["items"][0]["snippet"]["categoryId"] != '10'){
-  echo "0";
-  exit();
+if ($onlymusic == "on") {
+  if ($test["items"][0]["snippet"]["categoryId"] != '10'){
+    echo "0";
+    exit();
+  }
 }
 
 $sql = "INSERT INTO playlist VALUES ('".substr(uniqid(),0,10)."', '".$_POST['ytid']."', '".$mysqli->real_escape_string($test["items"][0]["snippet"]["title"])."', '0' , NOW())";

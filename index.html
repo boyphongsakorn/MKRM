@@ -11,9 +11,16 @@
             height: 100%;
             overflow: hidden;
         }
+        img.sticky {
+            position:fixed;
+            right:0;
+            bottom:0;
+            width: 200px;
+        }
     </style>
 </head>
 <body>
+    <img class="sticky" id="qrcode" alt="Avatar">
     <div style="height: 100%;display: flex;">
         <div style="width: 70%;" id="videodisplay">
             <div id="ytplayer" width="100%" height="100%"></div>
@@ -41,6 +48,21 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
     
     <script>
+        var settings = {
+            "url": "http://localhost/mkrm/gsettings.php",
+            "method": "GET",
+            "timeout": 0,
+        };
+
+        $.ajax(settings).done(function (response) {
+            if(JSON.parse(response)[3] == 'on'){
+                document.getElementById("qrcode").src = "http://api.qrserver.com/v1/create-qr-code/?data="+ encodeURI("https://"+ window.location.hostname + "/addmusic.html") +"&size=100x100"
+            }else{
+                document.getElementById("qrcode").style.display = "none"
+            }
+            //console.log(JSON.parse(response)[3]);
+        });
+
         toastr.options = {
             "closeButton": false,
             "debug": false,
@@ -125,16 +147,10 @@
         }
 
         function onPlayerReady(event) {
-<<<<<<< HEAD
             //event.target.mute()
             //event.target.playVideo()
             event.target.setVolume(50)
             //event.target.unMute()
-=======
-            event.target.mute()
-            event.target.playVideo()
-            event.target.setVolume(50)
->>>>>>> e103d29bced369d644e551ff11bb05b80501dc09
         }
 
         /*function addnewvideo() {
