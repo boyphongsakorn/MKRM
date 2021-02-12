@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -128,3 +129,110 @@
     </script>
 </body>
 </html>
+=======
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+</head>
+<body>
+
+    <div class="input-group mb-3">
+        <input class="form-control" id="textyoutube" type="text" placeholder="ลิงค์ Youtube" aria-label="ลิงค์ Youtube">
+        <button type="button" onclick="addnewvideo(document.getElementById('textyoutube').value)" class="btn btn-primary">ขอเพลง</button>
+    </div>
+    <div class="input-group mb-3">
+        <input type="text" id="searchyoutube" class="form-control" placeholder="เพลงที่ต้องการค้นหา" aria-label="เพลงที่ต้องการค้นหา" aria-describedby="basic-addon2">
+        <button type="button" onclick="searchvideo()" class="btn btn-primary">ค้นหา</button>
+    </div>
+
+    <div class="row row-cols-2 row-cols-md-4 g-4" id="showsearch">
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>
+        function ytVidId(url) {
+            var p = /^(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?(?=.*v=((\w|-){11}))(?:\S+)?$/;
+            return (url.match(p)) ? RegExp.$1 : false;
+        }
+
+        function YouTubeGetID(url){
+            var ID = '';
+            url = url.replace(/(>|<)/gi,'').split(/(vi\/|v=|\/v\/|youtu\.be\/|\/embed\/)/);
+            if(url[2] !== undefined) {
+                ID = url[2].split(/[^0-9a-z_\-]/i);
+                ID = ID[0];
+            }
+            else {
+                ID = url;
+            }
+            return ID;
+        }
+
+        function addnewvideo(test) {
+            if (ytVidId(test) !== false) {
+                //alert('yes')
+                test = YouTubeGetID(test)
+            } else {
+                //alert('no')
+            }
+            //video_id = video_id.replace("https://youtu.be/", "");
+            //video_id = video_id.replace("https://www.youtube.com/watch?v=", "");
+            //video_id = video_id.replace("https:/youtube.com/watch?v=", "");
+
+            //console.log(test)
+
+            $.post("amq.php",
+            {
+                ytid: test,
+            },
+            function(data,status){
+                if(data == '0'){
+                    Swal.fire(
+                        'มีปัญหา',
+                        'วิดีโอที่คุณเพิ่มไม่ใช่เพลง',
+                        'error'
+                    )
+                }else if(data == '1'){
+                    Swal.fire(
+                        'เรียบร้อย',
+                        'เพิ่มวิดีโอเข้าไปเรียบร้อยแล้ว',
+                        'success'
+                    )
+                }
+                //alert("Data: " + data + "\nStatus: " + status);
+            });
+        }
+
+        function searchvideo() {
+            document.getElementById('showsearch').innerHTML = ''
+
+            var settings = {
+                "url": "https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=50&order=viewCount&q="+document.getElementById('searchyoutube').value+"&type=video&videoCategoryId=10&key=youtubedataapi",
+                "method": "GET",
+                "timeout": 0,
+                "headers": {
+                    "Accept": "application/json"
+                },
+            };
+
+            $.ajax(settings).done(function (response) {
+                $.each(response.items, function(key, value) {
+                    //console.log(value.id.videoId)
+                    document.getElementById('showsearch').innerHTML += '<div class="col" onclick="addnewvideo(\''+value.id.videoId+'\')"><div class="card"><img src="https://i.ytimg.com/vi/'+value.id.videoId+'/hqdefault.jpg" class="card-img-top"><div class="card-body"><h5 class="card-title">'+value.snippet.title+'</h5></div></div></div>'
+                    //document.getElementById('musiclist').innerHTML += '<tr><th scope=\"row\">'+(key+1)+'</th><td>'+value.pl_ytname+'</td></tr>'
+                });
+                //console.log(response.items[0].id.videoId);
+            });
+        }
+    </script>
+</body>
+</html>
+>>>>>>> ea371af779aece666f06fe8f8a2bed2bf56b02e7
