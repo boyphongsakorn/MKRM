@@ -5,7 +5,7 @@ COPY start-apache /usr/local/bin
 RUN a2enmod rewrite
 
 # Copy application source
-RUN chmod 755 .start-apache
+RUN chmod 755 /start-apache
 COPY . /var/www/
 RUN chown -R www-data:www-data /var/www
 
