@@ -26,6 +26,21 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <script>
+        let gr_id = ''
+
+        //get gr_id from parameter in url
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, '\\$&');
+            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
+
+        gr_id = getParameterByName('gr_id')
+
         var youtubedatakey
         var music = 'on'
         var settings = {
@@ -79,6 +94,7 @@
             $.post("amq.php",
             {
                 ytid: test,
+                gr_id: gr_id,
             },
             function(data,status){
                 if(data == '0'){

@@ -33,7 +33,7 @@ if ($onlymusic == "on") {
   }
 }
 
-$sql = "INSERT INTO playlist VALUES ('".substr(uniqid(),0,10)."', '".$_POST['ytid']."', '".$mysqli->real_escape_string($test["items"][0]["snippet"]["title"])."', '0' , NOW())";
+$sql = "INSERT INTO playlist VALUES ('".substr(uniqid(),0,10)."', '".$_POST['gr_id']."', '".$_POST['ytid']."', '".$mysqli->real_escape_string($test["items"][0]["snippet"]["title"])."', '0' , NOW())";
 
 if ($mysqli->query($sql) === TRUE) {
   echo "1";
