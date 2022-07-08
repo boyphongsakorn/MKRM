@@ -1,7 +1,7 @@
 <?php
 include 'config.php';
 
-$sql = "SELECT pl_id, pl_ytid, pl_ytname FROM playlist WHERE pl_justplay <> '1' AND grid='".$_GET['gr_id']."'";
+$sql = "SELECT pl_id, pl_ytid, pl_ytname FROM playlist WHERE pl_justplay <> '1' AND gr_id='".$_GET['gr_id']."'";
 $result = $mysqli->query($sql);
 
 if ($result->num_rows > 0) {
