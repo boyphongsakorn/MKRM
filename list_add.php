@@ -3,7 +3,7 @@ include 'config.php';
 
 $mysqli -> select_db("mail_list");
 
-$sql = "INSERT INTO list ('id','name', 'nickname', 'address') VALUES (NULL,'".$_POST['name']."', '".$_POST['nickname']."', '".$_POST['address']."')";
+$sql = "INSERT INTO list VALUES (NULL, '".$_POST['name']."', '".$_POST['nickname']."', '".$_POST['address']."')";
 
 if ($mysqli->query($sql) === TRUE) {
   echo "1";
