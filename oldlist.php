@@ -3,7 +3,7 @@ include 'config.php';
 
 $mysqli -> select_db("mkrm");
 
-$sql = "SELECT * FROM playlist";
+$sql = "SELECT * FROM playlist order by pl_datetime desc";
 
 if ($result = $mysqli->query($sql)) {
     //echo json

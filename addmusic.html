@@ -56,12 +56,12 @@
             if(JSON.parse(response)[1] == 'off'){
                 document.getElementById('search').style.display ='none';
             } else {
-                document.getElementById('search').style.display ='block';
+                document.getElementById('search').style.display ='flex';
             }
             if(JSON.parse(response)[2] == 'off'){
                 document.getElementById('muslink').style.display = 'none';
             } else {
-                document.getElementById('muslink').style.display = 'block';
+                document.getElementById('muslink').style.display = 'flex';
             }
             music = JSON.parse(response)[0]
             youtubedatakey = JSON.parse(response)[4]
@@ -154,8 +154,15 @@
         fetch('oldlist.php')
         .then(response => response.json())
         .then(data => {
+            //remove same pl_ytname in data
+            data = data.filter((thing, index, self) =>
+                index === self.findIndex((t) => (
+                    t.pl_ytname === thing.pl_ytname
+                ))
+            )
             //console.log(data)
             $.each(data, function(key, value) {
+
                 //console.log(value.pl_ytname)
                 document.getElementById('showsearch').innerHTML += '<div class="col" onclick="addnewvideo(\''+value.pl_ytid+'\')"><div class="card"><img src="https://i.ytimg.com/vi/'+value.pl_ytid+'/hqdefault.jpg" class="card-img-top"><div class="card-body"><h5 class="card-title">'+value.pl_ytname+'</h5></div></div></div>'
             });
