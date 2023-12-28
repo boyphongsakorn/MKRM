@@ -154,12 +154,6 @@
         fetch('oldlist.php')
         .then(response => response.json())
         .then(data => {
-            //remove same pl_ytname in data
-            data = data.filter((thing, index, self) =>
-                index === self.findIndex((t) => (
-                    t.pl_ytname === thing.pl_ytname
-                ))
-            )
             //console.log(data)
             $.each(data, function(key, value) {
                 //skip if pl_ytname is test
