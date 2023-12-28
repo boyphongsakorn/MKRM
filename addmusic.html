@@ -163,11 +163,11 @@
             //console.log(data)
             $.each(data, function(key, value) {
                 //skip if pl_ytname is test
-                if(value.pl_ytname == 'test'){
-                    return true;
+                if(value.pl_ytname != 'test'){
+                    //console.log(value.pl_ytname)
+                    document.getElementById('showsearch').innerHTML += '<div class="col" onclick="addnewvideo(\''+value.pl_ytid+'\')"><div class="card"><img src="https://i.ytimg.com/vi/'+value.pl_ytid+'/hqdefault.jpg" class="card-img-top"><div class="card-body"><h5 class="card-title">'+value.pl_ytname+'</h5></div></div></div>'
                 }
-                //console.log(value.pl_ytname)
-                document.getElementById('showsearch').innerHTML += '<div class="col" onclick="addnewvideo(\''+value.pl_ytid+'\')"><div class="card"><img src="https://i.ytimg.com/vi/'+value.pl_ytid+'/hqdefault.jpg" class="card-img-top"><div class="card-body"><h5 class="card-title">'+value.pl_ytname+'</h5></div></div></div>'
+                
             });
         });
     </script>
