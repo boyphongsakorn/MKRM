@@ -2,10 +2,13 @@
 
 //get parameters from url name query and search to https://anywhere.pwisetthon.com/http://suggestqueries.google.com/complete/search?client=chrome&ds=yt&q=QUERY
 
+//create new value from $_GET['query'] and convert from using urlencode
+$search = urlencode($_GET['query']);
+
 $curl = curl_init();
 
 curl_setopt_array($curl, array(
-  CURLOPT_URL => 'https://anywhere.pwisetthon.com/http://suggestqueries.google.com/complete/search?client=chrome&ds=yt&q='.$_GET['query'],
+  CURLOPT_URL => 'https://anywhere.pwisetthon.com/http://suggestqueries.google.com/complete/search?client=chrome&ds=yt&q='.$search,
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_ENCODING => '',
   CURLOPT_MAXREDIRS => 10,
