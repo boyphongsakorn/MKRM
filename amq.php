@@ -33,8 +33,8 @@ if ($onlymusic == "on") {
   }
 }
 
-//get only text from title
-$test["items"][0]["snippet"]["title"] = preg_replace('/[^A-Za-z0-9\-]/', ' ', $test["items"][0]["snippet"]["title"]);
+//remove emoji from title
+$test["items"][0]["snippet"]["title"] = preg_replace('/[\x{10000}-\x{10FFFF}]/u', '', $test["items"][0]["snippet"]["title"]);
 
 $sql = "INSERT INTO playlist VALUES ('".substr(uniqid(),0,10)."', '".$_POST['gr_id']."', '".$_POST['ytid']."', '".$mysqli->real_escape_string($test["items"][0]["snippet"]["title"])."', '0' , NOW())";
 
