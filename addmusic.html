@@ -14,7 +14,7 @@
         <button type="button" onclick="addnewvideo(document.getElementById('textyoutube').value)" class="btn btn-primary">ขอเพลง</button>
     </div>
     <div class="input-group mb-3" id="search">
-        <input type="text" id="searchyoutube" class="form-control" placeholder="เพลงที่ต้องการค้นหา" aria-label="เพลงที่ต้องการค้นหา" aria-describedby="basic-addon2">
+        <input type="text" id="searchyoutube" class="form-control" placeholder="ค้นหาเพลงที่ต้องการ" aria-label="ค้นหาเพลงที่ต้องการ" aria-describedby="basic-addon2">
         <button type="button" onclick="searchvideo()" class="btn btn-primary">ค้นหา</button>
     </div>
 
@@ -47,7 +47,7 @@
         var youtubedatakey
         var music = 'on'
         var settings = {
-            "url": "gsettings.php",
+            "url": "https://mkrm.pwisetthon.com/gsettings.php",
             "method": "GET",
             "timeout": 0,
         };
@@ -98,7 +98,7 @@
 
             //console.log(test)
 
-            $.post("amq.php",
+            $.post("https://mkrm.pwisetthon.com/amq.php",
             {
                 ytid: test,
                 gr_id: gr_id,
