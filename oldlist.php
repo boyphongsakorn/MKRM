@@ -3,7 +3,7 @@ include 'config.php';
 
 $mysqli -> select_db("mkrm");
 
-$sql = "SELECT * FROM playlist group by pl_ytid,pl_ytname order by pl_datetime desc";
+$sql = "SELECT * FROM playlist group by pl_ytid,pl_ytname order by max(pl_datetime) desc";
 
 if ($result = $mysqli->query($sql)) {
     //echo json
